@@ -1,0 +1,190 @@
+.vehicle-hud {
+  position: fixed;
+  bottom: 5%;
+  right: 3%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  z-index: 998;
+}
+
+.hud-container {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.speed-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(1.5) translateX(-45px) translateY(-20px);
+  transition: transform 0.3s ease;
+  margin-bottom: 20px;
+}
+
+.engine-health-indicator {
+  position: absolute;
+  left: -50px;
+  top: 45%;
+  transform: translateY(12px) translateX(-30px);
+  transition: color 0.3s ease;
+}
+
+.tire-status-indicator {
+  position: absolute;
+  left: -50px;
+  top: 45%;
+  transform: translateY(-15px) translateX(-30px);
+  transition: color 0.3s ease;
+}
+
+.engine-icon {
+  font-size: 1.2rem;
+  filter: drop-shadow(0 0 5px currentColor);
+}
+
+.tire-icon {
+  font-size: 1.2rem;
+  filter: drop-shadow(0 0 5px currentColor);
+}
+
+.rpm-gauge {
+  position: absolute;
+  transform: scale(1.4);
+}
+
+.rpm-gauge-fg {
+  transition: stroke-dashoffset 0.1s ease-out;
+  filter: drop-shadow(0 0 2px var(--glow-color, rgba(0, 255, 255, 0.7)));
+}
+
+.rpm-tick {
+  transition: stroke 0.2s ease;
+}
+
+.speed-container {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  transform: translateX(25px);
+}
+
+.speed-display {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  justify-content: flex-end;
+  width: 120px;
+  position: relative;
+}
+
+.speed-value {
+  font-family: 'Arial', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 1);
+  text-align: right;
+  min-width: 85px;
+  transform: translateX(-40px);
+}
+
+.speed-unit {
+  font-family: 'Arial', sans-serif;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+  padding-bottom: 2px;
+  position: absolute;
+  right: 0;
+}
+
+.gear-display {
+  position: relative;
+  display: flex;
+  gap: 1px;
+  justify-content: flex-end;
+  margin-top: 10px;
+  transform: translateY(40px) translateX(20px);
+}
+
+.gear-number {
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Arial', sans-serif;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.5);
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.gear-number.active {
+  color: rgba(255, 255, 255, 1);
+  background: rgba(0, 225, 255, 0.397);
+  box-shadow: 
+    0 0 10px rgba(0, 225, 255, 0.3),
+    0 0 20px rgba(0, 225, 255, 0.1);
+  text-shadow: 
+    0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.fuel-gauge-container {
+  position: relative;
+  transform: scale(0.8) translateX(-115px) translateY(100px);
+  margin-right: 20px;
+  margin-bottom: 10px;
+}
+
+.fuel-gauge-container canvas {
+  filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.404));
+}
+
+.fuel-icon {
+  transform: translateY(-25px) translateX(2px);
+}
+
+.gas-icon {
+  filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.548));
+}
+
+.seatbelt-indicator {
+  position: absolute;
+  left: -50px;
+  top: 45%;
+  transform: translateY(-50px) translateX(-25px);
+}
+
+.seatbelt-icon {
+  font-size: 1.2rem;
+}
+
+.seatbelt-indicator.active {
+  color: #7fcdee;
+  filter: drop-shadow(0 0 8px #7fcdee);
+}
+
+.seatbelt-indicator.warning {
+  color: #f4e736;
+  filter: drop-shadow(0 0 8px rgba(244, 241, 54, 0.6));
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}

@@ -1,0 +1,211 @@
+:root {
+  --hud-scale: 0.9;
+  --thirst-icon-size: 40px;
+  --thirst-faded-color: rgba(255, 255, 255, 0.822);
+  --hunger-faded-color: rgba(255, 255, 255, 0.822);
+  --stamina-faded-color: rgba(255, 255, 255, 0.822);
+}
+
+.nui-wrapper {
+  text-align: center;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+pre {
+  counter-reset:line-numbering;
+  background:#2c3e50;
+  padding:12px 0px 14px 0;
+  color:#ecf0f1;
+  line-height:140%;
+}
+
+.popup-thing {
+  background: #282c34;
+  border-radius: 10px;
+  width: 500px;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.health-indicator {
+  position: fixed;
+  bottom: 25px;
+  left: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  z-index: 1000;
+  transform: scale(var(--hud-scale)); /* Scale down to 70% of original size */
+  transform-origin: bottom left; /* Keep it anchored to bottom left corner */
+}
+
+
+.dev-controls-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.dev-controls {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(14, 15, 59, 0.95);
+  padding: 20px;
+  border-radius: 8px;
+  color: white;
+  min-width: 300px;
+  z-index: 1000;
+  border: 1px solid #07407b;
+}
+
+.dev-controls-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.dev-controls h2 {
+  margin: 0;
+  color: #7fcdee;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  color: #f7931e;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0 8px;
+  line-height: 1;
+}
+
+.close-button:hover {
+  color: #ff0000;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.control-group label {
+  color: #f7931e;
+}
+
+.control-group input[type="range"] {
+  width: 100%;
+}
+
+.control-group button {
+  background: #07407b;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.control-group button:hover {
+  background: #7fcdee;
+}
+
+.health-indicator .health-progress-bar .progressTrack {
+  background: #ffffff27 !important;
+}
+
+.health-indicator .health-progress-bar .progressFill {
+  background: linear-gradient(to right, "red", 'green') !important;
+  background-size: 300px 100% !important; /* Match this to your progressWidth */
+  background-repeat: no-repeat !important;
+}
+
+.status-indicators-container {
+  position: fixed;
+  bottom: 2vh;
+  left: calc(105px + 210px * var(--hud-scale));
+  z-index: 1000;
+  display: flex;
+  gap: 7px;
+  transform: scale(var(--hud-scale));
+  transform-origin: bottom left;
+}
+
+.thirst-indicator {
+  position: relative;
+  width: var(--thirst-icon-size);
+  height: var(--thirst-icon-size);
+}
+
+.thirst-indicator > div:first-child svg path,
+.hunger-indicator > div:first-child svg path,
+.stamina-indicator > div:first-child svg path {
+  stroke-width: 4px;
+  stroke: var(--thirst-faded-color);
+  fill: none;
+}
+
+.thirst-indicator > div:last-child svg path {
+  filter: drop-shadow(0 0 4px #00ffff) 
+         drop-shadow(0 0 6px #00ffff)
+         drop-shadow(0 0 8px rgba(0, 255, 255, 0.8));
+  stroke-width: 4.0px;
+  stroke: #ffffff;
+  fill: none;
+}
+
+.hunger-indicator {
+  position: relative;
+  width: var(--thirst-icon-size);
+  height: var(--thirst-icon-size);
+}
+
+.hunger-indicator > div:last-child svg path {
+  filter: drop-shadow(0 0 4px #ff9900) 
+         drop-shadow(0 0 6px #ff9900)
+         drop-shadow(0 0 8px rgba(255, 153, 0, 0.8));
+  stroke-width: 4.0px;
+  stroke: #ffffff;
+  fill: none;
+}
+
+.stamina-indicator {
+  position: relative;
+  width: var(--thirst-icon-size);
+  height: var(--thirst-icon-size);
+}
+
+.stamina-indicator > div:last-child svg path {
+  filter: drop-shadow(0 0 4px #b300ff) 
+         drop-shadow(0 0 6px #b300ff)
+         drop-shadow(0 0 8px #b300ff)
+         drop-shadow(0 0 10px rgba(179, 0, 255, 0.8));
+  stroke-width: 4.0px;
+  stroke: #ffffff;
+  fill: none;
+}
+
+.stamina-indicator > div {
+  box-shadow: none;
+}
+
+/* color pallete colors
+darkest blue #0e0f3b	(14,15,59)
+dark blue #07407b	(7,64,123)
+light blue #7fcdee	(127,205,238)
+orange #f7931e	(247,147,30)
+white #ffffff	(255,255,255)
+*/
