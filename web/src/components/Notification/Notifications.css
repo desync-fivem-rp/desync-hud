@@ -1,21 +1,21 @@
 :root {
     /* Base colors */
-    --notification-bg: rgba(14, 15, 59, 0.4);
+    --notification-bg: rgba(14, 15, 59, 0.85);
     --notification-text: white;
     
     /* Success colors */
-    --success-border: rgba(127, 205, 238, 0.8);
-    --success-glow: rgba(127, 205, 238, 0.2);
-    --success-inner-glow: rgba(127, 205, 238, 0.1);
-    --success-icon: #7fcdee;
-    --success-title: #7fcdee;
+    --success-border: rgba(162, 238, 127, 0.8);
+    --success-glow: rgba(162, 238, 127, 0.35);
+    --success-inner-glow: rgba(162, 238, 127, 0.1);
+    --success-icon: #7fee7f;
+    --success-title: #7fee7f;
     
     /* Error colors */
-    --error-border: rgba(247, 147, 30, 0.8);
-    --error-glow: rgba(247, 147, 30, 0.2);
-    --error-inner-glow: rgba(247, 147, 30, 0.1);
-    --error-icon: #f7931e;
-    --error-title: #f7931e;
+    --error-border: rgba(247, 30, 30, 0.8);
+    --error-glow: rgba(247, 30, 30, 0.35);
+    --error-inner-glow: rgba(247, 30, 30, 0.1);
+    --error-icon: #f71e1e;
+    --error-title: #f71e1e;
     
     /* Warning colors - using error colors by default */
     --warning-border: var(--error-border);
@@ -61,11 +61,11 @@
     border-radius: 8px;
     padding: 16px;
     margin: 8px;
-    max-width: 400px;
+    max-width: 500px;
     background: var(--notification-bg);
-    border: 1px solid var(--success-border);
+    border: 2px solid var(--success-border);
     box-shadow: 
-        0 0 15px var(--success-glow),
+        0 0 20px var(--success-glow),
         inset 0 0 15px var(--success-inner-glow);
     animation: slideInFade 0.3s ease-out, slideOutFade 0.3s ease-in forwards;
     animation-delay: 0s, calc(var(--duration, 3000) * 1ms - 300ms);
@@ -75,28 +75,28 @@
 .notification.success { 
     border-color: var(--success-border);
     box-shadow: 
-        0 0 15px var(--success-glow),
+        0 0 20px var(--success-glow),
         inset 0 0 15px var(--success-inner-glow);
 }
 
 .notification.error { 
     border-color: var(--error-border);
     box-shadow: 
-        0 0 15px var(--error-glow),
+        0 0 20px var(--error-glow),
         inset 0 0 15px var(--error-inner-glow);
 }
 
 .notification.warning { 
     border-color: var(--warning-border);
     box-shadow: 
-        0 0 15px var(--warning-glow),
+        0 0 20px var(--warning-glow),
         inset 0 0 15px var(--warning-inner-glow);
 }
 
 .notification.info { 
     border-color: var(--info-border);
     box-shadow: 
-        0 0 15px var(--info-glow),
+        0 0 20px var(--info-glow),
         inset 0 0 15px var(--info-inner-glow);
 }
 
@@ -155,14 +155,13 @@
 
 /* Compact notification styles */
 .notification.compact {
-    padding: 8px 12px;
-    max-width: 250px;
-    gap: 8px;
+    padding: 10px 16px;
+    max-width: 300px;
+    gap: 10px;
 }
 
 .notification.compact .notification-icon {
-    margin-right: 8px;
-    font-size: 1em;
+    font-size: 1.1em;
 }
 
 .notification.compact .notification-content {
@@ -172,7 +171,7 @@
 
 .notification.compact .notification-content p {
     margin: 0;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 500;
 }
 

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+// import '@types/react';
 import './VehicleHUD.css';
 import GaugeComponent from 'react-gauge-component';
 import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
@@ -123,7 +124,7 @@ const VehicleHUD: React.FC<VehicleHUDProps> = ({ visible }) => {
             />
           </div>
         </div>
-        <div className="speed-group">
+        <div className="speed-group" >
           <div className="engine-health-indicator" style={{ color: engineColor }}>
             <TbEngine className="engine-icon" />
           </div>

@@ -13,6 +13,9 @@ function Notifications.ShowNotification(data)
             variant = data.variant or 'default'
         }
     })
+
+    TriggerEvent('InteractSound_CL:PlayOnOne', data.type, 0.1)
+
 end
 
 

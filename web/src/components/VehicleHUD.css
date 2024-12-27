@@ -177,6 +177,16 @@
   animation: pulse 2s infinite;
 }
 
+.slide-in {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.slide-out {
+  transform: translateY(100px);
+  opacity: 0;
+}
+
 @keyframes pulse {
   0% {
     opacity: 1;

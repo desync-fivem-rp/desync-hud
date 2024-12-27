@@ -35,6 +35,7 @@ function Vehicle.getVehicleData()
         local fuel = GetVehicleFuelLevel(vehicle)
         local rpm = GetVehicleCurrentRpm(vehicle)
         local gearArray = Vehicle.getGearArray()
+        local engineRunning = GetIsVehicleEngineRunning(vehicle)
         
         -- Get tire burst status for all wheels
         local tires = {}
@@ -42,9 +43,8 @@ function Vehicle.getVehicleData()
             tires[i] = IsVehicleTyreBurst(vehicle, i, false)
         end
         
-        
         return {
-            show = true,
+            show = engineRunning,
             engineHealth = vehicleHealth,
             speed = vehicleSpeed,
             fuel = fuel,
@@ -86,11 +86,11 @@ function Vehicle.updateVehicleState()
         -- Send update to NUI
         Utils.sendReactMessage('updateVehicleHUD', vehicleData)
         
-        -- Update HUD visibility
-        if vehicleData.show then
-            DisplayRadar(true)
-            State.setDisplayRadar(true)
-        elseif not vehicleData.show and wasInVehicle then
+        -- Update HUD visibility based on being in vehicle AND engine running
+        if Vehicle.isInVehicle() then
+            DisplayRadar(vehicleData.show)
+            State.setDisplayRadar(vehicleData.show)
+        else
             DisplayRadar(false)
             State.setDisplayRadar(false)
         end
