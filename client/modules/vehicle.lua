@@ -3,6 +3,8 @@ local Utils = require '@desync-hud/client/modules/utils'
 local State = require '@desync-hud/client/modules/state'
 
 local hasPlayedWarningSound = false
+SetFlyThroughWindscreenParams(Config.ejectVelocity, Config.unknownEjectVelocity, Config.unknownModifier, Config.minDamage);
+
 
 function Vehicle.init()
     -- Initialize vehicle tracking
@@ -158,25 +160,37 @@ function Vehicle.getGearArray()
 end
 
 function Vehicle.toggleSeatbelt()
+    local ped = PlayerPedId()
     if not Vehicle.isInVehicle() then return end
-    
-    local newState = not State.getSeatbeltState()
-    State.setSeatbeltState(newState)
-    
-    
-    local volume = Config.seatbeltVolume
-
-    if Config.playSound then
+    local class = GetVehicleClass(GetVehiclePedIsIn(ped))
+    -- 8 = Car, 13 = Boat, 14 = Helicopter
+    if class ~= 8 and class ~= 13 and class ~= 14 then
+        local newState = not State.getSeatbeltState()
+        State.setSeatbeltState(newState)
+        
         if newState then
-            TriggerEvent('InteractSound_CL:PlayOnOne', 'buckle', volume)
+            --  Buckled
+            SetFlyThroughWindscreenParams(10000.0, 10000.0, 17.0, 500.0);
+            SetPedConfigFlag(PlayerPedId(), 32, true);
         else
-            TriggerEvent('InteractSound_CL:PlayOnOne', 'unbuckle', volume)
+            --  Unbuckled
+            SetFlyThroughWindscreenParams(Config.ejectVelocity, Config.unknownEjectVelocity, Config.unknownModifier, Config.minDamage)
+            -- SetFlyThroughWindscreenParams(0.0, 0.0, 0.0, 0.0);
         end
-    end
+        
+        local volume = Config.seatbeltVolume
 
-    -- Update UI with complete vehicle data
-    Utils.sendReactMessage('updateVehicleHUD', Vehicle.getVehicleData())
-    
+        if Config.playSound then
+            if newState then
+                TriggerEvent('InteractSound_CL:PlayOnOne', 'buckle', volume)
+            else
+                TriggerEvent('InteractSound_CL:PlayOnOne', 'unbuckle', volume)
+            end
+        end
+
+        -- Update UI with complete vehicle data
+        Utils.sendReactMessage('updateVehicleHUD', Vehicle.getVehicleData())
+    end
 end
 
 function Vehicle.isSeatbeltOn()
