@@ -42,6 +42,8 @@ files {
 
 dependencies {
 	'ox_core',
-	'interact-sound',
+	'desync-sounds',
   'oxmysql',
+  'desync-map',
+  'desync-status',
 }
