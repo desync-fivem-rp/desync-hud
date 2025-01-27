@@ -1,5 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./App.css";
+import Lottie from 'lottie-react';
+
+import AMMOICON from './assets/wired-outline-1892-bullets-hover-pinch.json';
 
 // Utilities
 import { debugData } from "../utils/debugData";
@@ -10,9 +13,10 @@ import HealthIndicator from "./HealthIndicator";
 import HungerIndicator from "./HungerIndicator";
 import ThirstIndicator from "./ThirstIndicator";
 import StaminaIndicator from "./StaminaIndicator";
-import DevControls from "./DevControls";
 import VehicleHUD from "./VehicleHUD";
 import Notifications from "./Notification/Notifications";
+import UnconsciousScreen from "./UnconsciousScreen";
+import StressIndicator from "./StressIndicator";
 
 // This will set the NUI to visible if we are developing in browser
 debugData([
@@ -25,15 +29,38 @@ debugData([
 const App: React.FC = () => {
   // UI visibility states
   const [visible, setVisible] = useState(false);
-  const [devControlsVisible, setDevControlsVisible] = useState(false);
+  const [unconscious, setUnconscious] = useState(false);
+  const [ammo, setAmmo] = useState({ ammoInClip: 0, totalAmmo: 0, isArmed: 0 });
+
+  // const baseLottieRef = useRef<any>(null);
+
+  const playerRef = useRef<any>(null);
+  
+  useEffect(() => {
+      playerRef.current?.playFromBeginning();
+  }, [])
+
+  useEffect(() => {
+    console.log('isArmed:', ammo.isArmed);
+  }, [ammo.isArmed]);
 
   // NUI Event handlers
   useNuiEvent('setVisible', (data: boolean) => {
     setVisible(data)
   });
 
-  useNuiEvent('setDevControlsVisible', setDevControlsVisible);
 
+  useNuiEvent('setUnconscious', (data: boolean) => {
+    setUnconscious(data);
+  });
+
+  useNuiEvent('updateAmmo', (data: { ammoInClip: number, totalAmmo: number, isArmed: number }) => {
+    setAmmo(data);
+  });
+
+  if (unconscious) {
+    return <UnconsciousScreen />;
+  }
 
   if (!visible) return null;
 
@@ -47,12 +74,30 @@ const App: React.FC = () => {
             <ThirstIndicator />
             <HungerIndicator />
             <StaminaIndicator />
+            <StressIndicator />
           </div>
         </div>
         
         <VehicleHUD visible={visible} />
+        {ammo.isArmed === 1 && (
         
-        {devControlsVisible && <DevControls />}
+          <div className="ammo-indicator" style={{ visibility:  ammo.isArmed > 0 ? 'visible' : 'hidden' }}>
+            <Lottie 
+              lottieRef={playerRef}
+              animationData={AMMOICON}
+              loop={true}
+              style={{ 
+                width: 'var(--thirst-icon-size)', 
+                height: 'var(--thirst-icon-size)',
+                marginRight: '10px'
+              }}
+            />
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '2px' }}>
+              <div>{ammo.ammoInClip}</div>
+              <div>{ammo.totalAmmo}</div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -8,6 +8,10 @@ function UI.init()
     AddEventHandler('onResourceStart', function(resourceName)
         if GetCurrentResourceName() == resourceName then
             Wait(1000)
+            if State.getDisplay() then
+                Utils.debugPrint('NUI frame is already open')
+                return
+            end
             UI.toggleNuiFrame(true)
         end
     end)
@@ -51,6 +55,16 @@ function UI.init()
         cb({ stamina = stamina })
     end)
 
+    RegisterNUICallback('getPlayerStress', function(_, cb)
+        local player = Ox.GetPlayer()
+        if player then
+            local stress = player.getStatus('stress')
+            cb({ stress = stress })
+        else
+            cb({ stress = 0 })
+        end
+    end)
+
     -- Register commands
     RegisterCommand('show-nui', function()
         if State.getDisplay() then
@@ -79,9 +93,19 @@ function UI.toggleNuiFrame(shouldShow)
         State.setDisplayRadar(false)
     end
     
-    DisplayHud(false)
+    -- DisplayHud(false)
     State.setDisplay(shouldShow)
 end
 
+
+
+AddEventHandler("desync-hud:showHudForBennys", function(inBennys)
+    State.setBennysHudState(inBennys)
+    if inBennys then
+        Utils.sendReactMessage('setVisible', false)
+    else
+        Utils.sendReactMessage('setVisible', true)
+    end
+end)
 
 return UI

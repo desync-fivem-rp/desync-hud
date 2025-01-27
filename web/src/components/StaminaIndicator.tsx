@@ -21,6 +21,8 @@ const StaminaIndicator: React.FC = () => {
   const previousStamina = useRef(100);
   const baseLottieRef = useRef<any>(null);
   const glowLottieRef = useRef<any>(null);
+  const [visible, setVisible] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Listen for stamina updates from the client
   useNuiEvent<StaminaState>('updateStamina', (data) => {
@@ -74,8 +76,17 @@ const StaminaIndicator: React.FC = () => {
     getInitialStamina();
   }, []);
 
-  return (
-    <div className='stamina-indicator'>
+  useEffect(() => {
+    if (stamina < 100) {
+      setVisible(true);
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    } else {
+      timeoutRef.current = setTimeout(() => setVisible(false), 5000);
+    }
+  }, [stamina]);
+
+  return visible ? (
+    <div className={`stamina-indicator fade-in`}>
       {/* Base faded icon layer */}
       <div style={{ 
         position: 'absolute',
@@ -113,7 +124,7 @@ const StaminaIndicator: React.FC = () => {
         />
       </div>
     </div>
-  );
+  ) : null;
 };
 
 export default StaminaIndicator;

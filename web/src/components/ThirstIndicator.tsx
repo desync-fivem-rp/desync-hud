@@ -21,6 +21,8 @@ const ThirstIndicator: React.FC = () => {
   const [thirst, setThirst] = useState(100); // Start with full thirst (100)
   const baseLottieRef = useRef<any>(null);
   const glowLottieRef = useRef<any>(null);
+  const [visible, setVisible] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Listen for thirst updates from the client
   useNuiEvent<ThirstState>('updateThirst', (data) => {
@@ -60,8 +62,17 @@ const ThirstIndicator: React.FC = () => {
     getInitialThirst();
   }, []);
 
-  return (
-    <div className='thirst-indicator'>
+  useEffect(() => {
+    if (thirst < 95) {
+      setVisible(true);
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    } else {
+      timeoutRef.current = setTimeout(() => setVisible(false), 5000);
+    }
+  }, [thirst]);
+
+  return visible ? (
+    <div className={`thirst-indicator fade-in`}>
       {/* Base faded icon layer */}
       <div style={{ 
         position: 'absolute',
@@ -97,7 +108,7 @@ const ThirstIndicator: React.FC = () => {
         />
       </div>
     </div>
-  );
+  ) : null;
 };
 
 export default ThirstIndicator;

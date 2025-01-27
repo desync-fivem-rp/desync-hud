@@ -34,6 +34,14 @@ function State.getLastVehicleState()
     }
 end
 
+function State.getBennysHudState()
+    return State.bennysHudState
+end
+
+function State.setBennysHudState(value)
+    State.bennysHudState = value
+end
+
 function State.getSeatbeltState()
     return State.seatbeltOn
 end
@@ -41,5 +49,11 @@ end
 function State.setSeatbeltState(value)
     State.seatbeltOn = value
 end
+
+
+AddEventHandler("desync-hud:ToggleHud", function(value)
+    print('desync-hud:ToggleHud', value)
+    State.setDisplay(not value)
+end)
 
 return State

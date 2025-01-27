@@ -3,12 +3,15 @@ import './Notifications.css';
 
 interface Notification {
   id: string;
-  type: 'success' | 'error' | 'warning' | 'info';
+  type: 'success' | 'error' | 'warning' | 'info' | 'dispatch';
   title?: string;
   message: string;
   icon?: string;
   duration?: number;
   variant?: 'default' | 'compact';
+  vehicleDescription?: string;
+  pedDescription?: string;
+  street?: string;
 }
 
 const Notifications: React.FC = () => {
@@ -59,6 +62,13 @@ const Notifications: React.FC = () => {
             <div className="notification-content">
               <h4>{notification.title}</h4>
               <p>{notification.message}</p>
+              {notification.type === 'dispatch' && (
+                <>
+                  {notification.vehicleDescription && <p>Vehicle: {notification.vehicleDescription}</p>}
+                  {notification.pedDescription && <p>Pedestrian: {notification.pedDescription}</p>}
+                  {notification.street && <p>Location: {notification.street}</p>}
+                </>
+              )}
             </div>
           </div>
         ))}
@@ -76,6 +86,13 @@ const Notifications: React.FC = () => {
             )}
             <div className="notification-content">
               <p>{notification.message}</p>
+              {notification.type === 'dispatch' && (
+                <>
+                  {notification.vehicleDescription && <p>Vehicle: {notification.vehicleDescription}</p>}
+                  {notification.pedDescription && <p>Pedestrian: {notification.pedDescription}</p>}
+                  {notification.street && <p>Location: {notification.street}</p>}
+                </>
+              )}
             </div>
           </div>
         ))}

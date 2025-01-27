@@ -30,6 +30,13 @@
     --info-inner-glow: var(--success-inner-glow);
     --info-icon: var(--success-icon);
     --info-title: var(--success-title);
+    
+    /* Dispatch colors */
+    --dispatch-border: rgba(244, 245, 247, 0.8);
+    --dispatch-glow: rgba(30, 144, 255, 0.35);
+    --dispatch-inner-glow: rgba(30, 144, 255, 0.1);
+    --dispatch-icon: #1e90ff;
+    --dispatch-title: #1e90ff;
 }
 
 .notification-container {
@@ -100,6 +107,23 @@
         inset 0 0 15px var(--info-inner-glow);
 }
 
+.notification.dispatch { 
+    border-color: var(--dispatch-border);
+    box-shadow: 
+        0 0 20px var(--dispatch-glow),
+        inset 0 0 15px var(--dispatch-inner-glow);
+    padding: 20px;
+    max-width: 1000px;
+}
+
+.notification.dispatch .notification-content {
+    font-size: 1rem;
+}
+
+.notification.dispatch .notification-icon {
+    font-size: 1.5em;
+}
+
 .notification-icon {
     margin-right: 12px;
     font-size: 1.2em;
@@ -120,6 +144,11 @@
 .notification.info .notification-icon {
     color: var(--info-icon);
     text-shadow: 0 0 10px var(--info-glow);
+}
+
+.notification.dispatch .notification-icon {
+    color: var(--dispatch-icon);
+    text-shadow: 0 0 10px var(--dispatch-glow);
 }
 
 .notification-content {
@@ -145,6 +174,10 @@
 
 .notification.info .notification-content h4 {
     color: var(--info-title);
+}
+
+.notification.dispatch .notification-content h4 {
+    color: var(--dispatch-title);
 }
 
 .notification-content p {

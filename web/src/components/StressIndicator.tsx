@@ -3,70 +3,71 @@ import { fetchNui } from '../utils/fetchNui';
 import { useNuiEvent } from '../hooks/useNuiEvent';
 import Lottie from 'lottie-react';
 
-import ICON from './assets/wired-outline-567-french-fries-chips-hover-pinch.json';
+// Placeholder for the stress icon animation data
+import ICON from './assets/wired-outline-426-brain-hover-pinch.json'; // Update this path once you have the SVG
 
-interface HungerState {
-  hunger: number;
+interface StressState {
+  stress: number;
 }
 
 const ANIMATION_CONFIG = {
-  LOW_HUNGER_SPEED: 2, // Faster animation when hungry
-  HIGH_HUNGER_SPEED: 0.1, // Slower animation when fed
-  HUNGER_THRESHOLD: 30, // Below this value is considered "hungry"
+  LOW_STRESS_SPEED: 2, // Faster animation when stressed
+  HIGH_STRESS_SPEED: 0.1, // Slower animation when relaxed
+  STRESS_THRESHOLD: 30, // Below this value is considered "stressed"
 };
 
-const HungerIndicator: React.FC = () => {
-  const [hunger, setHunger] = useState(100);
+const StressIndicator: React.FC = () => {
+  const [stress, setStress] = useState(100);
   const [visible, setVisible] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const baseLottieRef = useRef<any>(null);
   const glowLottieRef = useRef<any>(null);
 
-  // Listen for hunger updates from the client
-  useNuiEvent<HungerState>('updateHunger', (data) => {
-    if (data?.hunger !== undefined) {
-      setHunger(100 - data.hunger);
+  // Listen for stress updates from the client
+  useNuiEvent<StressState>('updateStress', (data) => {
+    if (data?.stress !== undefined) {
+      setStress(100 - data.stress);
     }
   });
 
-  // Update animation speed based on hunger level
+  // Update animation speed based on stress level
   useEffect(() => {
     if (baseLottieRef.current && glowLottieRef.current) {
-      const speed = hunger > ANIMATION_CONFIG.HUNGER_THRESHOLD 
-        ? ANIMATION_CONFIG.HIGH_HUNGER_SPEED 
-        : ANIMATION_CONFIG.LOW_HUNGER_SPEED;
+      const speed = stress > ANIMATION_CONFIG.STRESS_THRESHOLD 
+        ? ANIMATION_CONFIG.HIGH_STRESS_SPEED 
+        : ANIMATION_CONFIG.LOW_STRESS_SPEED;
       baseLottieRef.current.setSpeed(speed);
       glowLottieRef.current.setSpeed(speed);
     }
-  }, [hunger]);
+  }, [stress]);
 
-  // Initial hunger fetch
+  // Initial stress fetch
   useEffect(() => {
-    const getInitialHunger = async () => {
+    const getInitialStress = async () => {
       try {
-        const response = await fetchNui<HungerState>('getPlayerHunger');
-        if (response?.hunger !== undefined) {
-          setHunger(100 - response.hunger);
+        const response = await fetchNui<StressState>('getPlayerStress');
+        if (response?.stress !== undefined) {
+          setStress(100 - response.stress);
         }
       } catch (error) {
-        console.error('Failed to fetch initial hunger:', error);
+        console.error('Failed to fetch initial stress:', error);
       }
     };
 
-    getInitialHunger();
+    getInitialStress();
   }, []);
 
   useEffect(() => {
-    if (hunger < 95) {
+    if (stress < 100) {
       setVisible(true);
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     } else {
       timeoutRef.current = setTimeout(() => setVisible(false), 5000);
     }
-  }, [hunger]);
+  }, [stress]);
 
   return visible ? (
-    <div className={`hunger-indicator fade-in`}>
+    <div className={`stress-indicator fade-in`}>
       {/* Base faded icon layer */}
       <div style={{ 
         position: 'absolute',
@@ -89,7 +90,7 @@ const HungerIndicator: React.FC = () => {
         position: 'absolute',
         height: 'var(--thirst-icon-size)', 
         width: 'var(--thirst-icon-size)',
-        clipPath: `inset(${100 - hunger}% 0 0 0)`
+        clipPath: `inset(${100 - stress}% 0 0 0)`
       }}>
         <Lottie 
           lottieRef={glowLottieRef}
@@ -105,4 +106,4 @@ const HungerIndicator: React.FC = () => {
   ) : null;
 };
 
-export default HungerIndicator;
+export default StressIndicator; 

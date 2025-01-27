@@ -7,7 +7,7 @@
   "scripts": {
     "start": "vite",
     "start:game": "vite build --watch",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build --base=./",
     "preview": "vite preview"
   },
   "dependencies": {

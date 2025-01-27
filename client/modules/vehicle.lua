@@ -74,7 +74,11 @@ end
 function Vehicle.updateVehicleState()
     local wasInVehicle = State.getLastVehicleState().show
     local vehicleData = Vehicle.getVehicleData()
-    
+    local bennysHudState = State.getBennysHudState()
+
+    if bennysHudState then
+        vehicleData.show = false
+    end
     -- Only update if the state has changed
     if wasInVehicle ~= vehicleData.show or 
        (vehicleData.show and (
