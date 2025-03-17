@@ -8,12 +8,15 @@
     1. Using exports:
     -----------------
     exports['fivem-react-boilerplate']:ShowNotification({
-        type = 'success',      -- 'success', 'error', 'warning', 'info'
+        type = 'success',      -- 'success', 'error', 'warning', 'info', 'dispatch'
         title = 'Title',       -- Optional for compact notifications
         message = 'Message',   -- Required
         icon = '✓',           -- Optional: emoji or icon character
         duration = 5000,      -- Optional: milliseconds (default: 5000)
-        variant = 'default'   -- Optional: 'default' or 'compact' (default: 'default')
+        variant = 'default',   -- Optional: 'default' or 'compact' (default: 'default')
+        vehicleDescription = 'Vehicle Description', -- Optional: for dispatch notifications
+        pedDescription = 'Ped Description',       -- Optional: for dispatch notifications
+        street = 'Street Name'                    -- Optional: for dispatch notifications
     })
 
     2. Using events:
@@ -54,12 +57,25 @@
         duration = 3000
     })
 
+    -- Dispatch notification
+    exports['fivem-react-boilerplate']:ShowNotification({
+        type = 'dispatch',
+        title = 'Police Alert',
+        message = 'Robbery in progress',
+        icon = '🚔',
+        vehicleDescription = 'Black Sultan',
+        pedDescription = 'Male wearing black mask',
+        street = 'Grove Street'
+    })
+
     Available Options:
     -----------------
-    type: 'success' | 'error' | 'warning' | 'info'
+    type: 'success' | 'error' | 'warning' | 'info' | 'dispatch'
     title: string (optional for compact)
     message: string (required)
     icon: string (optional)
     duration: number (optional, default: 5000ms)
     variant: 'default' | 'compact' (optional, default: 'default')
-]]
+    vehicleDescription: string (optional, for dispatch notifications)
+    pedDescription: string (optional, for dispatch notifications)
+    street: string (optional, for dispatch notifications)
