@@ -7,7 +7,7 @@
 
     1. Using exports:
     -----------------
-    exports['fivem-react-boilerplate']:ShowNotification({
+    exports['desync-hud']:ShowNotification({
         type = 'success',      -- 'success', 'error', 'warning', 'info', 'dispatch'
         title = 'Title',       -- Optional for compact notifications
         message = 'Message',   -- Required
@@ -33,7 +33,7 @@
     Examples:
     ---------
     -- Default notification
-    exports['fivem-react-boilerplate']:ShowNotification({
+    exports['desync-hud']:ShowNotification({
         type = 'success',
         title = 'Money Received',
         message = 'You received $500',
@@ -41,7 +41,7 @@
     })
 
     -- Compact notification
-    exports['fivem-react-boilerplate']:ShowNotification({
+    exports['desync-hud']:ShowNotification({
         type = 'success',
         message = '+$500',
         icon = '💰',
@@ -49,7 +49,7 @@
     })
 
     -- Error notification with custom duration
-    exports['fivem-react-boilerplate']:ShowNotification({
+    exports['desync-hud']:ShowNotification({
         type = 'error',
         title = 'Error',
         message = 'Not enough money',
@@ -58,7 +58,7 @@
     })
 
     -- Dispatch notification
-    exports['fivem-react-boilerplate']:ShowNotification({
+    exports['desync-hud']:ShowNotification({
         type = 'dispatch',
         title = 'Police Alert',
         message = 'Robbery in progress',
