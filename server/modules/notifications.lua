@@ -1,13 +1,17 @@
+ESX = nil
+ESX = exports["es_extended"]:getSharedObject()
+
+
 RegisterNetEvent('desync-hud:server:ShowNotification')
 AddEventHandler('desync-hud:server:ShowNotification', function(source, data, groupName, position, radius)
     if groupName then
-        local players = Ox.GetPlayers({groups = groupName})
+        local players = ESX.GetExtendedPlayers('job', groupName)
         for _, player in ipairs(players) do
             local playerId = player.source
-            local onDuty = exports['desync-jobs']:getOnDutyStatus(player.charId)
-            if onDuty then
+            -- local onDuty = exports['desync-jobs']:getOnDutyStatus(player.charId)
+            -- if onDuty then
                 TriggerClientEvent('desync-hud:notifications:showNotification', playerId, data)
-            end
+            -- end
         end
     elseif position and radius then
         local nearbyPlayers = lib.getNearbyPlayers(position, radius)

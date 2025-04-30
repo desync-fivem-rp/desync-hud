@@ -31,9 +31,11 @@ function UI.init()
     end)
 
     RegisterNUICallback('getPlayerHunger', function(_, cb)
-        local player = Ox.GetPlayer()
+        local player = ESX.GetPlayerData()
         if player then
-            local hunger = player.getStatus('hunger')
+            TriggerEvent('esx_status:getStatus', 'hunger', function(status)
+                hunger = status.val / 10000
+            end)
             cb({ hunger = hunger })
         else
             cb({ hunger = 0 })
@@ -41,9 +43,11 @@ function UI.init()
     end)
 
     RegisterNUICallback('getPlayerThirst', function(_, cb)
-        local player = Ox.GetPlayer()
+        local player = ESX.GetPlayerData()
         if player then
-            local thirst = player.getStatus('thirst')
+            TriggerEvent('esx_status:getStatus', 'thirst', function(status)
+                thirst = status.val / 10000
+            end)
             cb({ thirst = thirst })
         else
             cb({ thirst = 0 })
@@ -56,9 +60,11 @@ function UI.init()
     end)
 
     RegisterNUICallback('getPlayerStress', function(_, cb)
-        local player = Ox.GetPlayer()
+        local player = ESX.GetPlayerData()
         if player then
-            local stress = player.getStatus('stress')
+            TriggerEvent('esx_status:getStatus', 'stress', function(status)
+                stress = status.val / 10000
+            end)
             cb({ stress = stress })
         else
             cb({ stress = 0 })

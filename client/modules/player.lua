@@ -5,6 +5,18 @@ local State = require '@desync-hud/client/modules/state'
 local isDead = false
 local isUnconscious = false
 
+PlayerData = {}
+ESX = nil
+
+Citizen.CreateThread(function()
+    while ESX == nil do
+        Citizen.Wait(10)
+        ESX = exports["es_extended"]:getSharedObject()
+    end
+
+    
+end)
+
 function Player.init()
     -- Initialize player related stuff
     CreateThread(function()
@@ -13,7 +25,7 @@ function Player.init()
             if State.getDisplay() then
                 
                 -- Update player stats
-                local player = Ox.GetPlayer()
+                local player = ESX.GetPlayerData()
                 if player then
                     -- Health update
                     local health = GetEntityHealth(PlayerPedId())
@@ -32,8 +44,14 @@ function Player.init()
                     
 
                     -- Hunger and thirst updates
-                    local hunger = player.getStatus('hunger')
-                    local thirst = player.getStatus('thirst')
+                    -- local hunger = player.getStatus('hunger')
+                    TriggerEvent('esx_status:getStatus', 'hunger', function(status)
+                        hunger = status.val / 10000
+                    end)
+
+                    TriggerEvent('esx_status:getStatus', 'thirst', function(status)
+                        thirst = status.val / 10000
+                    end)
                     Utils.sendReactMessage('updateHunger', { hunger = hunger })
                     Utils.sendReactMessage('updateThirst', { thirst = thirst })
 
@@ -42,7 +60,9 @@ function Player.init()
                     Utils.sendReactMessage('updateStamina', { stamina = stamina })
 
                     -- Stress update
-                    local stress = player.getStatus('stress')
+                    TriggerEvent('esx_status:getStatus', 'stress', function(status)
+                        stress = status.val / 10000
+                    end)
                     Utils.sendReactMessage('updateStress', { stress = stress })
 
 
@@ -69,10 +89,10 @@ function Player.init()
     end)
 end
 
-AddEventHandler('desync:playerDeath', function()
-    -- Trigger the crawling and unconscious sequence
-    TriggerEvent('desync:playerUnconscious')
-end)
+-- AddEventHandler('desync:playerDeath', function()
+--     -- Trigger the crawling and unconscious sequence
+--     TriggerEvent('desync:playerUnconscious')
+-- end)
 
 
 return Player
