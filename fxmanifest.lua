@@ -17,7 +17,7 @@ shared_scripts {
   '@ox_lib/init.lua',
   'config.lua',
   -- '@ox_core/lib/init.lua',
-  '@desync-core/shared/shared.lua'
+  -- '@desync-core/shared/shared.lua'
 }
 
 
@@ -43,7 +43,7 @@ files {
 
 dependencies {
 	-- 'ox_core',
-	-- 'desync-sounds',
+	'desync-sounds',
   'oxmysql',
   'desync-map',
   -- 'desync-status',
